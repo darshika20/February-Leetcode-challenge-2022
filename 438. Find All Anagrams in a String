@@ -1,0 +1,47 @@
+/**
+* author: Darshika
+* Question link: https://leetcode.com/problems/find-all-anagrams-in-a-string/
+* Time Complexity: O(n) n- length of s
+* Space Complexity: O(m) m - length of p
+*/
+
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        if(s.length() < p.length()){
+            return res;
+        }
+        Map<Character,Integer> charmap = new HashMap<>();
+        for(char c : p.toCharArray()){
+            charmap.put(c,charmap.getOrDefault(c,0)+1);
+        }
+        int begin = 0;
+        int end = 0;
+        int counter = charmap.size();
+        while(end < s.length()) {
+            char ch = s.charAt(end) ;
+            if(charmap.containsKey(ch)){
+                charmap.put(ch,charmap.get(ch)-1);
+                if(charmap.get(ch) == 0){
+                    counter--;
+                }
+            }
+            end++;
+            while(counter == 0){
+                char c = s.charAt(begin);
+                if(charmap.containsKey(c)){
+                    charmap.put(c,charmap.get(c)+1);
+                    if(charmap.get(c) > 0){
+                        counter++;
+                    }
+                }
+                
+                if(end-begin == p.length()){
+                    res.add(begin);
+                }
+                begin++;
+            }
+        }
+        return res;
+    }
+}
