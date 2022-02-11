@@ -1,0 +1,39 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/permutation-in-string/
+* Time Complexity: O(n)
+* Space Complexity: O(1)
+*/
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if(s1.length() > s2.length()){
+            return false;
+        }
+        int[] map = new int[26];
+        int i = 0;
+        for(;i<s1.length();i++){
+            map[s1.charAt(i)-'a']++;
+            map[s2.charAt(i)-'a']--;
+        }
+        if(allZero(map)){
+            return true;
+        }
+        for(;i<s2.length();i++){
+            map[s2.charAt(i)-'a']--;
+            map[s2.charAt(i-s1.length())-'a']++;
+            if(allZero(map)){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean allZero(int[] map) {
+        for(int val : map){
+            if(val != 0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
