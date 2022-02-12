@@ -1,0 +1,48 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/word-ladder/
+* Time Complexity: O(n)
+* Space Complexity: O(n)
+*/
+
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> set = new HashSet<>();
+        for(String word : wordList){//O(n)
+            set.add(word);
+        }
+        if(!set.contains(endWord)){
+            return 0;
+        }
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        int depth = 1;
+        while(!queue.isEmpty()){//26*O(n)
+            int size = queue.size();
+            //System.out.println(queue);
+            while(size-- > 0){
+                String word = queue.poll();
+                if(word.equals(endWord)){
+                    return depth;
+                }
+                for(int i = 0;i<word.length();i++){
+                    char c = word.charAt(i);
+                    for(int  j = 0;j<26;j++){
+                        if(c == 'a'+j){
+                            continue;
+                        }
+                        String temp = word.substring(0,i)+(char)(('a'+j))+word.substring(i+1);
+                        //System.out.println(temp);
+                        if(set.contains(temp)){
+                            queue.offer(temp);
+                            set.remove(temp);
+                        }
+                    }
+                }                            
+            }
+            
+            depth++;
+        }
+        return 0;
+    }
+}
