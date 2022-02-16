@@ -1,0 +1,39 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/swap-nodes-in-pairs/
+* Time Complexity: O(n)
+* Space Complexity: O(1)
+*/
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {//1->2->3->4
+        if(head == null || head.next == null) {
+            return head;
+        }
+        ListNode dummy = new ListNode();//0
+        dummy.next = head;//0->1->2->3->4
+        ListNode prev = dummy;//0
+        ListNode temp = head;//1
+        while(temp!=null && temp.next != null){
+            ListNode cur1 = temp;//1
+            ListNode cur2 = cur1.next;//
+            ListNode next = cur2.next;
+            prev.next = cur2;
+            cur2.next = cur1;
+            cur1.next = next;
+            prev = cur1;
+            temp = next;
+        }
+        return dummy.next;
+    }
+}
